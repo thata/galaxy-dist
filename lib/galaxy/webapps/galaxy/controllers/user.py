@@ -296,7 +296,9 @@ class User( BaseUIController, UsesFormDefinitionsMixin ):
                         openid_objs = []
                         for openid in openids:
                             openid_provider_obj = trans.app.openid_providers.get( openid.provider )
+                            # galaxy_user_openid#provider が空の場合...
                             if not openid_provider_obj:
+                                # galaxy_user_openid#identifier なんて属性は無いので必ずエラーで落ちる！
                                 openid_provider_obj = trans.app.openid_providers.new_provider_from_identifier( openid.identifier )
                             if not openid_provider_obj.never_associate_with_user:
                                 openid.user = user
